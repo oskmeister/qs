@@ -83,8 +83,8 @@ void sieve(mpz_t number){
   mpz_root(a, number, 2);
   mpz_add_ui(a, a, 1);
   dgmp_printf("initial a = %Zd\n", a);
-  while(true){
-    dprintf("next pass: a = %Zd\n", a);
+  while(1){
+    dgmp_printf("next pass: a = %Zd\n", a);
     smooth_found = 0;
     while(smooth_found < smooth_find){
       /* generate sieving field */
