@@ -1,6 +1,10 @@
 #pragma once
 #include <gmp.h>
 
+/*
+	Wrapper around mpz_t
+*/
+
 struct BigInt {
 
 	mpz_t n;

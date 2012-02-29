@@ -8,7 +8,9 @@
 #include <queue>
 
 
-
+/*
+	Main prime sieve
+*/
 struct sieve {
 
 	BigInt N;

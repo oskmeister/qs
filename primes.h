@@ -2,6 +2,10 @@
 
 #include<vector>
 
+/*
+	Prime sieve (sieve of erastosthenes)
+*/
+
 struct prime_sieve {
 
 	int N;

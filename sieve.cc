@@ -30,6 +30,11 @@ void sieve::go(){
 	dprintf("Begin factoring!\n");
 	std::queue<BigInt> toFactor;
 	toFactor.push(N);
+	/*
+		Continously factor the number.
+		If probably prime, output as factor
+		Else - split into 2 factors, and keep factoring them
+	*/
 	while(!toFactor.empty()){
 		BigInt next = toFactor.front(); toFactor.pop();
 		dgmp_printf("Next number to factor: %Zd\n", next.n);
