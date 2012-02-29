@@ -1,12 +1,22 @@
-CC=gcc
-CFLAGS=-c -std=gnu99 -Wall
+CC=g++
+CFLAGS=-c -Wall
 LDFLAGS=-lgmp
 all: qs
-qs: main.o sieve.o
-	$(CC) main.o sieve.o -o qs $(LDFLAGS)
-main.o: main.c
-	$(CC) main.c $(CFLAGS)
-sieve.o: sieve.c
-	$(CC) sieve.c $(CFLAGS)
+
+qs: main.o sieve.o factor.o bigint.o
+	$(CC) main.o sieve.o factor.o bigint.o -o qs $(LDFLAGS)
+
+main.o: main.cc
+	$(CC) main.cc $(CFLAGS)
+
+sieve.o: sieve.cc
+	$(CC) sieve.cc $(CFLAGS)
+
+factor.o: factor.cc
+	$(CC) factor.cc $(CFLAGS)
+
+bigint.o: bigint.cc
+	$(CC) bigint.cc $(CFLAGS)
+
 clean: 
 	rm -rf *.o qs
