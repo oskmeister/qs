@@ -1,10 +1,10 @@
 CC=g++
-CFLAGS=-c -Wall
-LDFLAGS=-lgmp
+CFLAGS=-c -Wall -O2
+LDFLAGS=-lgmp -lgmpxx -O2
 all: qs
 
-qs: main.o sieve.o factor.o bigint.o
-	$(CC) main.o sieve.o factor.o bigint.o -o qs $(LDFLAGS)
+qs: main.o sieve.o factor.o 
+	$(CC) main.o sieve.o factor.o -o qs $(LDFLAGS)
 
 main.o: main.cc
 	$(CC) main.cc $(CFLAGS)
@@ -14,9 +14,6 @@ sieve.o: sieve.cc
 
 factor.o: factor.cc
 	$(CC) factor.cc $(CFLAGS)
-
-bigint.o: bigint.cc
-	$(CC) bigint.cc $(CFLAGS)
 
 clean: 
 	rm -rf *.o qs

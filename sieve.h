@@ -1,17 +1,20 @@
 #pragma once
 #include <gmp.h>
+#include <gmpxx.h>	
 #include <vector>
 #include "debug.h"
 #include "matrix.h"
 #include "factor.h"
-#include "bigint.h"
 #include <queue>
 
 
-
+/*
+	Main prime sieve
+*/
 struct sieve {
 
-	BigInt N;
+	mpz_class N;
+
 	std::vector<int> primes;
 
 public:

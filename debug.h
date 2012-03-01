@@ -1,10 +1,10 @@
 #pragma once
 //Some debug macros. Compile with -DDEBUG for debug output
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 
-#define dprintf printf
-#define dgmp_printf gmp_printf
+#define dprintf(...) fprintf(stderr, __VA_ARGS__)
+#define dgmp_printf(...) gmp_fprintf(stderr, __VA_ARGS__)
 
 #else
 
@@ -12,3 +12,6 @@
 #define dgmp_printf if(false) gmp_printf
 
 #endif
+
+#define eprintf(...) fprintf(stderr, __VA_ARGS__)
+#define egmp_printf(...) gmp_fprintf(stderr, __VA_ARGS__)
