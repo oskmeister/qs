@@ -1,29 +1,22 @@
 #pragma once
 #include "debug.h"
 #include <bitset>
+#include <cstdlib>
 /*
 	A matrix that only supports 0, 1.
 */
 template<int r, int c>
 struct matrix {
+
 	std::bitset<c> data[r];
-
+	
 	std::bitset<c> solve(){
-		dprintf("Solving this matrix:\n");
-		for(int i = 0; i<r; i++){
-			for(int j = 0; j<c; j++){
-				bool b = data[i][j];
-				dprintf("%d ", b);
-			}
-			dprintf("\n");
-		}
-
-		//Reduce matrix
+		//Reduce matrix into row-echelon
 		/*
 			For every column, we search every row until we find one where this column is 1.
 			We then swap rows, and XOR it with all rows below which has this column as 1.
 		*/
-		for(int i = 0; i<c; i++){
+		for(int i = 0; i<r; i++){
 			for(int j = i; j<r; j++){
 				if(data[j][i]){
 					swap(data[i], data[j]);
@@ -39,38 +32,38 @@ struct matrix {
 			}
 		}
 		/*
-			We have values for some of the variables (i.e. they must be 0) - remove them!
+			Back-subsitute into matrix
 		*/
-		for(int i = c-1; i>=0; i--){
-			if(data[i][i] && data[i].count() == 1){
+		for(int i = r-1; i>=0; i--){
+			if(data[i][i]){
 				for(int j = 0; j<r; j++){
-					if(i != j) data[j][i] = 0;
+					if(i != j && data[j][i]) data[j] ^= data[i];
 				}
 			}
 		}
-
 		/*
-			Remove empty and duplicate
+			Semi-randomly assign values to variables
 		*/
-		int rowCount = 0;
-		for(int i = 0; i<r; i++){
-			bool same = false;
-			for(int j = 0; j<rowCount; j++)
-				if(data[j] == data[i]){
-					same = true;
+		std::bitset<c> sol;
+		int inc = 0;
+		for(int i = r; i>=0; i--){
+			bool val = (inc < r/2) || rand()%5 == 0;
+			for(int j = r-1; j>=0; j--){
+				if(data[j][i] && data[j].count() == 1){
+					val = data[j][c-1];
+					break;
 				}
-			if(data[i].count() && !same){
-				data[rowCount++] = data[i];
-				skip:;
 			}
+			for(int j = 0; j<r; j++){
+				if(data[j][i] && data[j].count() != 1){
+					data[j][i] = false;
+					data[j][c-1] = data[j][c-1]^val;
+				}
+			}
+			inc += val;
+			sol[i] = val;
 		}
-
-		dprintf("Reduced to: \n");
-		for(int i = 0; i<rowCount; i++){
-			for(int j = 0; j<c; j++)
-				dprintf("%d ", (bool)data[i][j]);
-			dprintf("\n");
-		}
+		return sol;
 	}
 
 	std::bitset<c>& operator[](int _r) {
